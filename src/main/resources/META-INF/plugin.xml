@@ -1,0 +1,22 @@
+<idea-plugin>
+    <id>by.butek.spring.spring-intellij-plugin</id>
+    <name>Simple Spring Support</name>
+    <vendor>Viktor Kudryavtsev</vendor>
+
+    <description><![CDATA[
+    Provides support for Spring Framework in Java.
+    ]]></description>
+
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.properties</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="by.home.butek.plugin.simple.spring.CheckAnnotationProcessorsStartupActivity"/>
+
+        <implicitUsageProvider implementation="by.home.butek.plugin.simple.spring.SpringImplicitUsageProvider"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
