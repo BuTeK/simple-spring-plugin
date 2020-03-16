@@ -25,7 +25,7 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
                     && AnnotationUtil.isAnnotated(method, SpringElements.METHOD_ANNOTATIONS, 0)
                     && inRestControllerClass(method))
 
-                    || (method.hasModifierProperty(PsiModifier.PUBLIC)
+                    || (!method.hasModifierProperty(PsiModifier.PRIVATE)
                     && AnnotationUtil.isAnnotated(method, SpringElements.CONFIGURATION_METHOD_ANNOTATIONS, 0)
                     && inConfigurationClass(method));
         }
