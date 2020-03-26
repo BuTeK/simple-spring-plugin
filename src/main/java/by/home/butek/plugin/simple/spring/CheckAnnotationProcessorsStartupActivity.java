@@ -46,7 +46,7 @@ public class CheckAnnotationProcessorsStartupActivity implements StartupActivity
 
         JBPopupFactory.getInstance()
                 .createHtmlTextBalloonBuilder(
-                        "Do you want to enable annotation processors for Micronaut compilation? <a href=\"enable\">Enable</a>",
+                        "Do you want to enable annotation processors for Spring Frameworks compilation? <a href=\"enable\">Enable</a>",
                         MessageType.WARNING, e -> {
                             if (HyperlinkEvent.EventType.ACTIVATED == e.getEventType()) {
                                 enableAnnotations(project);

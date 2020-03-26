@@ -13,12 +13,18 @@ public class SpringElements {
     public static final String CONTROLLER_CLASS = "org.springframework.stereotype.Controller";
     public static final String COMPONENT_CLASS = "org.springframework.stereotype.Component";
     public static final String REPOSITORY_CLASS = "org.springframework.stereotype.Repository";
+    public static final String SPRING_BOOT_TEST_CLASS = "org.springframework.boot.test.context.SpringBootTest";
+    public static final String RUN_WITH = "org.junit.runner.RunWith";
+
     public static final List<String> BEAN_CLASS_ANNOTATIONS = asList(
             REST_CONTROLLER_CLASS,
             CONTROLLER_CLASS,
             SERVICE_CLASS,
             COMPONENT_CLASS,
-            REPOSITORY_CLASS
+            REPOSITORY_CLASS,
+            SPRING_BOOT_TEST_CLASS,
+            APPLICATION_CLASS,
+            RUN_WITH
     );
 
     public static final String INJECT = "javax.inject.Inject";
