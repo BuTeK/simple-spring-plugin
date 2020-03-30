@@ -31,8 +31,9 @@ public class SpringElements {
     public static final String VALUE = "org.springframework.beans.factory.annotation.Value";
     public static final String AUTOWIRED = "org.springframework.beans.factory.annotation.Autowired";
     public static final String MOCK_BEAN = "org.springframework.boot.test.mock.mockito.MockBean";
+    public static final String SPY_BEAN = "org.springframework.boot.test.mock.mockito.SpyBean";
 
-    public static final List<String> BEAN_FIELD_ANNOTATIONS = asList(AUTOWIRED, VALUE, INJECT, MOCK_BEAN);
+    public static final List<String> BEAN_FIELD_ANNOTATIONS = asList(AUTOWIRED, VALUE, INJECT, MOCK_BEAN, SPY_BEAN);
 
 
     public static final String GET_METHOD = "org.springframework.web.bind.annotation.GetMapping";
