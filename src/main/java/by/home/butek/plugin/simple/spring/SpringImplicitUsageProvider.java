@@ -6,7 +6,7 @@ import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.function.Predicate;
 
 import static com.intellij.codeInsight.AnnotationUtil.isAnnotated;
 
@@ -27,7 +27,10 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
 
                     || (!method.hasModifierProperty(PsiModifier.PRIVATE)
                     && AnnotationUtil.isAnnotated(method, SpringElements.CONFIGURATION_METHOD_ANNOTATIONS, 0)
-                    && inConfigurationClass(method));
+                    && inConfigurationClass(method))
+
+                    || (AnnotationUtil.isAnnotated(method, SpringElements.SCHEDULED, 0)
+                    && inBeanClass(method));
         }
         if (element instanceof PsiField) {
             PsiField field = (PsiField) element;
@@ -40,7 +43,8 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
     public boolean isImplicitWrite(@NotNull PsiElement element) {
         if (element instanceof PsiField) {
             PsiField field = (PsiField) element;
-            return AnnotationUtil.isAnnotated(field, SpringElements.BEAN_FIELD_ANNOTATIONS, 0) && inBeanClass(field);
+            return AnnotationUtil.isAnnotated(field, SpringElements.BEAN_FIELD_ANNOTATIONS, 0)
+                    && (inBeanClass(field) || inConfigurationClass(field));
         }
         return false;
     }
@@ -50,27 +54,33 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
         return false;
     }
 
+    private boolean findInParentClassAnnotated(PsiClass psiClass, @NotNull Predicate<PsiClass> predicate) {
+        if (psiClass == null) {
+            return false;
+        }
+        if (predicate.test(psiClass)) {
+            return true;
+        }
+        return findInParentClassAnnotated(psiClass.getSuperClass(), predicate);
+    }
+
     private boolean inRestControllerClass(@NotNull PsiMethod method) {
         PsiClass clazz = method.getContainingClass();
-        return existsInClass(clazz, Collections.singletonList(SpringElements.REST_CONTROLLER_CLASS));
+        return existsInClass(clazz, SpringElements.REST_CONTROLLER_CLASSES);
     }
 
-    private boolean inConfigurationClass(@NotNull PsiField field) {
-        PsiClass clazz = field.getContainingClass();
+    private boolean inConfigurationClass(@NotNull PsiJvmMember member) {
+        PsiClass clazz = member.getContainingClass();
         return existsInClass(clazz, SpringElements.CONFIGURATION_CLASSES);
     }
 
-    private boolean inConfigurationClass(@NotNull PsiMethod method) {
-        PsiClass clazz = method.getContainingClass();
-        return existsInClass(clazz, SpringElements.CONFIGURATION_CLASSES);
-    }
-
-    private boolean inBeanClass(@NotNull PsiField field) {
-        PsiClass clazz = field.getContainingClass();
+    private boolean inBeanClass(@NotNull PsiJvmMember psiJvmMember) {
+        PsiClass clazz = psiJvmMember.getContainingClass();
         return existsInClass(clazz, SpringElements.BEAN_CLASS_ANNOTATIONS);
     }
 
-    private boolean existsInClass(PsiClass clazz, Collection<String> annotations) {
-        return clazz != null && clazz.getQualifiedName() != null && isAnnotated(clazz, annotations, 0);
+    private boolean existsInClass(PsiClass psiClass, Collection<String> annotations) {
+        Predicate<PsiClass> predicate = (clazz) -> clazz.getQualifiedName() != null && isAnnotated(clazz, annotations, 0);
+        return findInParentClassAnnotated(psiClass, predicate);
     }
 }

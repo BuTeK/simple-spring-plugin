@@ -9,6 +9,7 @@ public class SpringElements {
     public static final String APPLICATION_CLASS = "org.springframework.boot.autoconfigure.SpringBootApplication";
 
     public static final String REST_CONTROLLER_CLASS = "org.springframework.web.bind.annotation.RestController";
+    public static final String REST_CONTROLLER_ADVICE_CLASS = "org.springframework.web.bind.annotation.RestControllerAdvice";
     public static final String SERVICE_CLASS = "org.springframework.stereotype.Service";
     public static final String CONTROLLER_CLASS = "org.springframework.stereotype.Controller";
     public static final String COMPONENT_CLASS = "org.springframework.stereotype.Component";
@@ -16,8 +17,14 @@ public class SpringElements {
     public static final String SPRING_BOOT_TEST_CLASS = "org.springframework.boot.test.context.SpringBootTest";
     public static final String RUN_WITH = "org.junit.runner.RunWith";
 
+    public static final List<String> REST_CONTROLLER_CLASSES = asList(
+            REST_CONTROLLER_CLASS,
+            REST_CONTROLLER_ADVICE_CLASS
+    );
+
     public static final List<String> BEAN_CLASS_ANNOTATIONS = asList(
             REST_CONTROLLER_CLASS,
+            REST_CONTROLLER_ADVICE_CLASS,
             CONTROLLER_CLASS,
             SERVICE_CLASS,
             COMPONENT_CLASS,
@@ -33,6 +40,8 @@ public class SpringElements {
     public static final String MOCK_BEAN = "org.springframework.boot.test.mock.mockito.MockBean";
     public static final String SPY_BEAN = "org.springframework.boot.test.mock.mockito.SpyBean";
 
+    public static final String SCHEDULED = "org.springframework.scheduling.annotation.Scheduled";
+
     public static final List<String> BEAN_FIELD_ANNOTATIONS = asList(AUTOWIRED, VALUE, INJECT, MOCK_BEAN, SPY_BEAN);
 
 
@@ -41,13 +50,15 @@ public class SpringElements {
     public static final String DELETE_METHOD = "org.springframework.web.bind.annotation.DeleteMapping";
     public static final String PUT_METHOD = "org.springframework.web.bind.annotation.PutMapping";
     public static final String PATCH_METHOD = "org.springframework.web.bind.annotation.PatchMapping";
+    public static final String EXCEPTION_HANDLER_METHOD = "org.springframework.web.bind.annotation.ExceptionHandler";
 
     public static final List<String> METHOD_ANNOTATIONS = asList(
             GET_METHOD,
             POST_METHOD,
             DELETE_METHOD,
             PUT_METHOD,
-            PATCH_METHOD
+            PATCH_METHOD,
+            EXCEPTION_HANDLER_METHOD
     );
 
     // Configuration
